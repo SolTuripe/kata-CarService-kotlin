@@ -34,7 +34,6 @@ class RentServiceTest {
         val user = User(1L, "Rosa")
         val car = Car(1L, "T333", "gogo")
         val rent = Rent(1, user, car)
-        //val rentService = RentService(userRepository, carRepository, rentRepository)
 
         //When - action
         Mockito.`when`(userRepository.findUserById(user.getId())).thenReturn(Optional.of(user))
@@ -52,14 +51,11 @@ class RentServiceTest {
     fun `should throw exception if user does not exist`() {
         val user = User(1L, "Rosa")
         val car = Car(1L, "T333", "gogo")
-        val rent = Rent(1, user, car)
 
         val rentService = RentService(userRepository, carRepository, rentRepository)
 
         Mockito.`when`(userRepository.findUserById(user.getId())).thenReturn(Optional.empty())
         Mockito.`when`(carRepository.findCarById(car.getId())).thenReturn(Optional.of(car))
-        Mockito.`when`(rentRepository.findRentByCar(car)).thenReturn(Optional.empty())
-        Mockito.`when`(rentRepository.save(rent)).thenReturn(rent)
 
         val thrown: RentServiceException = Assertions.assertThrows(
             RentServiceException::class.java,
@@ -67,6 +63,45 @@ class RentServiceTest {
 
         assertEquals("User not found", thrown.message)
         assertEquals("R-101", thrown.code)
+    }
+
+    @Test
+    fun `should throw exception if car does not exist`() {
+        val user = User(1L, "Rosa")
+        val car = Car(1L, "T333", "gogo")
+
+        val rentService = RentService(userRepository, carRepository, rentRepository)
+
+        Mockito.`when`(userRepository.findUserById(user.getId())).thenReturn(Optional.of(user))
+        Mockito.`when`(carRepository.findCarById(car.getId())).thenReturn(Optional.empty())
+
+        val thrown: RentServiceException = Assertions.assertThrows(
+            RentServiceException::class.java,
+            Executable { rentService.rentACar(user.getId(), car.getId()) })
+
+        assertEquals("Car not found", thrown.message)
+        assertEquals("U-102", thrown.code)
+    }
+
+    @Test
+    fun `should throw exception if car exists in rent repository`() {
+        val user = User(1L, "Rosa")
+        val car = Car(1L, "T333", "gogo")
+        val rent = Rent(1, user, car)
+
+        val rentService = RentService(userRepository, carRepository, rentRepository)
+
+        Mockito.`when`(userRepository.findUserById(user.getId())).thenReturn(Optional.of(user))
+        Mockito.`when`(carRepository.findCarById(car.getId())).thenReturn(Optional.of(car))
+        Mockito.`when`(rentRepository.findRentByCar(car)).thenReturn(Optional.of(rent))
+        Mockito.`when`(rentRepository.save(rent)).thenReturn(rent)
+
+        val thrown: RentServiceException = Assertions.assertThrows(
+            RentServiceException::class.java,
+            Executable { rentService.rentACar(user.getId(), car.getId()) })
+
+        assertEquals("Car is already rented", thrown.message)
+        assertEquals("C-103", thrown.code)
     }
 
 }
