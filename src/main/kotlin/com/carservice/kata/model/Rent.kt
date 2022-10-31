@@ -1,7 +1,5 @@
 package com.carservice.kata.model
 
-import java.util.*
-
 class Rent(rentingId: Long, rentingUser: User, rentedCar: Car) {
 
     private var rentingId = rentingId
