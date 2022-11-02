@@ -7,12 +7,8 @@ import com.carservice.kata.model.User
 import com.carservice.kata.repository.CarRepository
 import com.carservice.kata.repository.RentRepository
 import com.carservice.kata.repository.UserRepository
-import java.util.*
 
-class RentService(userRepository: UserRepository, carRepository: CarRepository, rentRepository: RentRepository) {
-    private var userRepository = userRepository
-    private var carRepository = carRepository
-    private var rentRepository = rentRepository
+class RentService(private var userRepository: UserRepository, private var carRepository: CarRepository, private var rentRepository: RentRepository) {
 
     fun rentACar(userId: Long, carId: Long): Rent {
 

@@ -1,8 +1,6 @@
 package com.carservice.kata.model
 
-class User(id: Long, name: String) {
-    private var id = id
-    private var name = name
+class User(private var id: Long, private var name: String) {
 
     fun getId(): Long {
         return id

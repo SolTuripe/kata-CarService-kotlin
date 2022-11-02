@@ -1,10 +1,6 @@
 package com.carservice.kata.model
 
-class Rent(rentingId: Long, rentingUser: User, rentedCar: Car) {
-
-    private var rentingId = rentingId
-    private var rentingUser = rentingUser
-    private var rentedCar = rentedCar
+class Rent(private var rentingId: Long, private var rentingUser: User, private var rentedCar: Car) {
 
     fun setRentingUser(get: User): User {
         return rentingUser

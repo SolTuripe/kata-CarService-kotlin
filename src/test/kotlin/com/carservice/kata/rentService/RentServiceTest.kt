@@ -103,5 +103,4 @@ class RentServiceTest {
         assertEquals("Car is already rented", thrown.message)
         assertEquals("C-103", thrown.code)
     }
-
 }
