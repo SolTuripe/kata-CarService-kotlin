@@ -1,6 +1,6 @@
 # Car service with kotlin 🚙
 
-TDD practice. Build a Car Renting Service
+Build a Car Renting Service
 
 🚥 Test → Red → Green → Refactor 🔁
 
@@ -12,7 +12,7 @@ Run the tests to see them pass!
 ## Tests 🚦
 
 <p align="center">
-<img src="./src/carTest.png" width=70%>
+<img src="./src/test-car.png" width=70%>
 </p>
 
 ## Rules 📋
